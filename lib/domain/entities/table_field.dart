@@ -18,7 +18,7 @@ class TableField {
   final int saldoGols;
   final int aproveitamento;
   final int variacaoPosicao;
-  final List<String> ultimosJogos;
+  final List<dynamic> ultimosJogos;
   TableField({
     required this.posicao,
     required this.pontos,
@@ -48,7 +48,7 @@ class TableField {
     int? saldoGols,
     int? aproveitamento,
     int? variacaoPosicao,
-    List<String>? ultimosJogos,
+    List<dynamic>? ultimosJogos,
   }) {
     return TableField(
       posicao: posicao ?? this.posicao,
@@ -99,7 +99,7 @@ class TableField {
       saldoGols: map['saldo_gols'] as int,
       aproveitamento: map['aproveitamento'] as int,
       variacaoPosicao: map['variacao_posicao'] as int,
-      ultimosJogos: List<String>.from((map['ultimos_jogos'] as List<String>)),
+      ultimosJogos: List<dynamic>.from((map['ultimos_jogos'] as List<dynamic>)),
     );
   }
 

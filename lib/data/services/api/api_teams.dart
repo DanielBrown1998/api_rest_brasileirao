@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:api_rest_brasileirao/domain/entities/match.dart';
 import 'package:api_rest_brasileirao/domain/entities/team.dart';
 import 'package:api_rest_brasileirao/domain/repository/team_repository_abstract.dart';
 import 'package:api_rest_brasileirao/utils/api_utils.dart';
@@ -8,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class ApiTeams implements TeamRepositoryAbstract {
   final String url = ApiUtils.urlRoot;
-  final String token = ApiUtils.apiUtilsTokenGmail;
+  final String token = ApiUtils.apiUtilsTokenHotmail;
 
   Future<http.Response> _get(String url) async {
     return await http.get(
@@ -37,7 +38,7 @@ class ApiTeams implements TeamRepositoryAbstract {
   }
 
   @override
-  Future<List<Team>?> getTeamLastGames(String id) async {
+  Future<List<Matchs>?> getTeamLastGames(String id) async {
     String urlWithId = "$url/v1/times/$id/partidas/anteriores";
     debugPrint(urlWithId);
     var response = await _get(urlWithId);
@@ -45,7 +46,7 @@ class ApiTeams implements TeamRepositoryAbstract {
     if (response.statusCode == 200) {
       List<dynamic> decoded = jsonDecode(response.body);
       var result = decoded.map((element) {
-        final team = Team.fromMap(element);
+        final team = Matchs.fromMap(element);
         return team;
       }).toList();
       return result;
@@ -54,15 +55,17 @@ class ApiTeams implements TeamRepositoryAbstract {
   }
 
   @override
-  Future<List<Team>?> getTeamNextGames(String id) async {
+  Future<List<Matchs>?> getTeamNextGames(String id) async {
     String urlWithId = "$url/v1/times/$id/partidas/proximas";
     debugPrint(urlWithId);
     var response = await _get(urlWithId);
     debugPrint(response.body);
     if (response.statusCode == 200) {
-      List<dynamic> decoded = jsonDecode(response.body);
+      Map<String, dynamic> map = jsonDecode(response.body);
+      var decoded = map.values as List<dynamic>;
+      debugPrint(decoded.toString());
       var result = decoded.map((element) {
-        final team = Team.fromMap(element);
+        final team = Matchs.fromMap(element);
         return team;
       }).toList();
       return result;

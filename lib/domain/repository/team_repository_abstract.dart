@@ -1,11 +1,12 @@
+import 'package:api_rest_brasileirao/domain/entities/match.dart';
 import 'package:api_rest_brasileirao/domain/entities/team.dart';
 
 abstract class TeamRepositoryAbstract {
-  Future<List<Team>?> getTeamNextGames(String id) async {
+  Future<List<Matchs>?> getTeamNextGames(String id) async {
     throw UnimplementedError();
   }
 
-  Future<List<Team>?> getTeamLastGames(String id) async {
+  Future<List<Matchs>?> getTeamLastGames(String id) async {
     throw UnimplementedError();
   }
 

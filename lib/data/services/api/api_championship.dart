@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class ApiChampionship implements ChampionshipRepositoryAbstract {
   final String url = ApiUtils.urlRoot;
-  final String token = ApiUtils.apiUtilsTokenGmail;
+  final String token = ApiUtils.apiUtilsTokenHotmail;
 
   Future<http.Response> _get(String url) async {
     return await http.get(
@@ -57,10 +57,9 @@ class ApiChampionship implements ChampionshipRepositoryAbstract {
     var response = await _get(urlWithId);
     debugPrint(response.body);
     if (response.statusCode == 200) {
-      var decoded = jsonDecode(response.body);
+      List<dynamic> decoded = jsonDecode(response.body);
       debugPrint(decoded.toString());
-      // final campeonato = Campeonato.fromMap(decoded);
-      // return campeonato;
+      return decoded.map((e) => TableField.fromMap(e)).toList();
     }
     return null;
   }

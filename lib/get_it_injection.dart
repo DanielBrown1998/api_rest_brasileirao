@@ -4,12 +4,14 @@ import 'package:api_rest_brasileirao/data/services/api/api_championship.dart';
 import 'package:api_rest_brasileirao/data/services/api/api_teams.dart';
 import 'package:api_rest_brasileirao/data/usecases/get_all_championships_use_case.dart';
 import 'package:api_rest_brasileirao/data/usecases/get_championship_use_case.dart';
+import 'package:api_rest_brasileirao/data/usecases/get_next_matches_use_case.dart';
 import 'package:api_rest_brasileirao/data/usecases/get_table_field_use_case.dart';
 import 'package:api_rest_brasileirao/data/usecases/get_team_use_case.dart';
 import 'package:api_rest_brasileirao/domain/repository/championship_repository_abstract.dart';
 import 'package:api_rest_brasileirao/domain/repository/team_repository_abstract.dart';
 import 'package:api_rest_brasileirao/domain/usecases/get_all_championships_use_case_abstract.dart';
 import 'package:api_rest_brasileirao/domain/usecases/get_championship_use_case_abstract.dart';
+import 'package:api_rest_brasileirao/domain/usecases/get_next_matches_use_case_abstract.dart';
 import 'package:api_rest_brasileirao/domain/usecases/get_table_field_use_case_abstract.dart';
 import 'package:api_rest_brasileirao/domain/usecases/get_team_use_case_abstract.dart';
 import 'package:get_it/get_it.dart';
@@ -34,6 +36,11 @@ void setupGetIt() {
   getIt.registerFactory<GetTeamUseCaseAbstract>(() {
     return GetTeamUseCase(getIt.get<TeamRepositoryAbstract>());
   });
+
+  getIt.registerFactory<GetNextMatchesUseCaseAbstract>(
+    () => GetNextMatchesUseCase(getIt.get<TeamRepositoryAbstract>()),
+  );
+
   getIt.registerFactory<GetChampionshipUseCaseAbstract>(() {
     return GetChampionshipUseCase(getIt.get<ChampionshipRepositoryAbstract>());
   });

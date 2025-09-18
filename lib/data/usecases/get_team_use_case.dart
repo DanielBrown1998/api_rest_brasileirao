@@ -8,7 +8,7 @@ class GetTeamUseCase implements GetTeamUseCaseAbstract {
   GetTeamUseCase(this.repository);
 
   @override
-  Future<Team?> call(String link) async {
-    return await repository.getTeam(link);
+  Future<Team?> call(String id) async {
+    return await repository.getTeam(id);
   }
 }

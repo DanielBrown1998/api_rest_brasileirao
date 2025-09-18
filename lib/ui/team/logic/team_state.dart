@@ -8,7 +8,8 @@ class TeamsLoading extends TeamsState {}
 
 class TeamsSuccess extends TeamsState {
   final Team? team;
-  TeamsSuccess(this.team);
+  final List<Matchs>? matchs;
+  TeamsSuccess(this.team, this.matchs);
 }
 
 class TeamsError extends TeamsState {

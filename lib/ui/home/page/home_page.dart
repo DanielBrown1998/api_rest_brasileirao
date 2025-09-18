@@ -1,9 +1,8 @@
-import 'package:api_rest_brasileirao/data/usecases/get_all_championships_use_case.dart';
-import 'package:api_rest_brasileirao/domain/entities/championship.dart';
 import 'package:api_rest_brasileirao/ui/championship/page/championship_page.dart';
+import 'package:api_rest_brasileirao/ui/home/logic/home_cubic.dart';
 import 'package:api_rest_brasileirao/ui/widgets/shield.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -15,13 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late GetIt getIt;
-  late GetAllChampionshipsUseCase championship;
-
   @override
   void initState() {
-    getIt = GetIt.instance;
-    championship = getIt.get<GetAllChampionshipsUseCase>();
     super.initState();
   }
 
@@ -91,59 +85,59 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: FutureBuilder(
-        // future: championship.getAllChampionchips(),
-        // future: getCampeonato(),
-        future: championship.call(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      body: BlocBuilder<HomeCubic, HomeState>(
+        builder: (_, state) {
+          HomeCubic cubit = BlocProvider.of<HomeCubic>(context, listen: false);
+          if (state is HomeInitial) {
+            cubit.getAllChampionships();
+          }
+          if (state is HomeLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error.toString()));
+          if (state is HomeError) {
+            return Center(child: Text(state.message));
           }
-          if (!snapshot.hasData) {
-            return const Center(child: Text("Nenhum dado encontrado"));
-          }
-          List<Championship> championschips = snapshot.data!;
-          return ListView.builder(
-            itemCount: championschips.length,
-            itemBuilder: (context, index) {
-              final camp = championschips[index];
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  shape: ContinuousRectangleBorder(
-                    side: BorderSide(
-                      color: theme.colorScheme.primary,
-                      width: 2,
+          if (state is HomeSuccess) {
+            return ListView.builder(
+              itemCount: cubit.championschips!.length,
+              itemBuilder: (context, index) {
+                final camp = cubit.championschips![index];
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    shape: ContinuousRectangleBorder(
+                      side: BorderSide(
+                        color: theme.colorScheme.primary,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(0),
                     ),
-                    borderRadius: BorderRadius.circular(0),
+                    elevation: 10,
+                    color: theme.colorScheme.primaryContainer,
+                    child: ListTile(
+                      style: ListTileStyle.list,
+                      splashColor: theme.colorScheme.inversePrimary,
+                      contentPadding: EdgeInsets.all(10),
+                      title: Text(camp.nome),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ChampionshipPage(championship: camp);
+                            },
+                          ),
+                        );
+                      },
+                      subtitle: Text(camp.edicaoAtual.nome),
+                      leading: ShieldWidget(urlShield: camp.logo),
+                    ),
                   ),
-                  elevation: 10,
-                  color: theme.colorScheme.primaryContainer,
-                  child: ListTile(
-                    style: ListTileStyle.list,
-                    splashColor: theme.colorScheme.inversePrimary,
-                    contentPadding: EdgeInsets.all(10),
-                    title: Text(camp.nome),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ChampionshipPage(championship: camp);
-                          },
-                        ),
-                      );
-                    },
-                    subtitle: Text(camp.edicaoAtual.nome),
-                    leading: ShieldWidget(urlShield: camp.logo),
-                  ),
-                ),
-              );
-            },
-          );
+                );
+              },
+            );
+          }
+          return const Center(child: Text("Nenhum dado encontrado"));
         },
       ),
     );
