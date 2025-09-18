@@ -1,0 +1,48 @@
+import 'package:api_rest_brasileirao/data/repository/championship_repository.dart';
+import 'package:api_rest_brasileirao/data/repository/team_repository.dart';
+import 'package:api_rest_brasileirao/data/services/api/api_championship.dart';
+import 'package:api_rest_brasileirao/data/services/api/api_teams.dart';
+import 'package:api_rest_brasileirao/data/usecases/get_all_championships_use_case.dart';
+import 'package:api_rest_brasileirao/data/usecases/get_championship_use_case.dart';
+import 'package:api_rest_brasileirao/data/usecases/get_table_field_use_case.dart';
+import 'package:api_rest_brasileirao/data/usecases/get_team_use_case.dart';
+import 'package:api_rest_brasileirao/domain/repository/championship_repository_abstract.dart';
+import 'package:api_rest_brasileirao/domain/repository/team_repository_abstract.dart';
+import 'package:api_rest_brasileirao/domain/usecases/get_all_championships_use_case_abstract.dart';
+import 'package:api_rest_brasileirao/domain/usecases/get_championship_use_case_abstract.dart';
+import 'package:api_rest_brasileirao/domain/usecases/get_table_field_use_case_abstract.dart';
+import 'package:api_rest_brasileirao/domain/usecases/get_team_use_case_abstract.dart';
+import 'package:get_it/get_it.dart';
+
+final getIt = GetIt.instance;
+
+void setupGetIt() {
+  ApiChampionship apiChampionship = ApiChampionship();
+  ApiTeams apiTeams = ApiTeams();
+
+  getIt.registerLazySingleton<ApiChampionship>(() => apiChampionship);
+  getIt.registerLazySingleton<ApiTeams>(() => apiTeams);
+
+  getIt.registerLazySingleton<TeamRepositoryAbstract>(
+    () => TeamRepository(getIt.get<ApiTeams>()),
+  );
+
+  getIt.registerLazySingleton<ChampionshipRepositoryAbstract>(
+    () => ChampionshipRepository(getIt.get<ApiChampionship>()),
+  );
+
+  getIt.registerFactory<GetTeamUseCaseAbstract>(() {
+    return GetTeamUseCase(getIt.get<TeamRepositoryAbstract>());
+  });
+  getIt.registerFactory<GetChampionshipUseCaseAbstract>(() {
+    return GetChampionshipUseCase(getIt.get<ChampionshipRepositoryAbstract>());
+  });
+  getIt.registerFactory<GetTableFieldUseCaseAbstract>(() {
+    return GetTableFieldUseCase(getIt.get<ChampionshipRepositoryAbstract>());
+  });
+  getIt.registerFactory<GetAllChampionshipsUseCaseAbstract>(() {
+    return GetAllChampionshipsUseCase(
+      getIt.get<ChampionshipRepositoryAbstract>(),
+    );
+  });
+}
