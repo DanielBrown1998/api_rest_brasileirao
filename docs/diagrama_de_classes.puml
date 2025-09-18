@@ -1,0 +1,110 @@
+@startuml
+title Diagrama de Classes - Arquitetura Completa
+
+skinparam packageStyle rect
+
+' ########## CAMADA DE UI ##########
+package "UI Layer" {
+  class HomePage
+  class ChampionshipPage
+  class TeamPage
+
+  class HomeCubit {
+    + getAllChampionships()
+  }
+  class ChampionshipCubit {
+    + getChampionship(id)
+  }
+  class TeamCubit {
+    + getTeam(id)
+  }
+
+  HomePage ..> HomeCubit
+  ChampionshipPage ..> ChampionshipCubit
+  TeamPage ..> TeamCubit
+}
+
+' ########## CAMADA DE DOMAIN ##########
+package "Domain Layer" {
+  abstract class "IGetAllChampionshipsUseCase" as IGetAllChampionshipsUseCase
+  abstract class "IGetChampionshipUseCase" as IGetChampionshipUseCase
+  abstract class "IGetTeamUseCase" as IGetTeamUseCase
+
+  abstract class "IChampionshipRepository" as IChampionshipRepository {
+    + Future<List<Championship>> getAll()
+    + Future<Championship> getById(int id)
+  }
+  abstract class "ITeamRepository" as ITeamRepository {
+    + Future<Team> getById(int id)
+  }
+
+  entity Championship {
+    +int id
+    +String name
+    +String logo
+  }
+  entity Team {
+    +int id
+    +String name
+    +String shieldUrl
+  }
+  entity TableField
+  entity Match
+}
+
+' ########## CAMADA DE DATA ##########
+package "Data Layer" {
+  class GetAllChampionshipsUseCase implements IGetAllChampionshipsUseCase {
+    - final IChampionshipRepository repository
+  }
+  class GetChampionshipUseCase implements IGetChampionshipUseCase {
+    - final IChampionshipRepository repository
+  }
+  class GetTeamUseCase implements IGetTeamUseCase {
+    - final ITeamRepository repository
+  }
+
+  class ChampionshipRepository implements IChampionshipRepository {
+    - final ApiService apiService
+  }
+  class TeamRepository implements ITeamRepository {
+    - final ApiService apiService
+  }
+
+  class ApiService {
+    - final Dio dio
+    + Future<dynamic> get(String path)
+  }
+}
+
+' ########## RELACIONAMENTOS ENTRE CAMADAS ##########
+
+' UI -> Domain (UseCases)
+HomeCubit --> IGetAllChampionshipsUseCase
+ChampionshipCubit --> IGetChampionshipUseCase
+TeamCubit --> IGetTeamUseCase
+
+' Domain (UseCases) -> Data (UseCases Impl)
+IGetAllChampionshipsUseCase <|-- GetAllChampionshipsUseCase
+IGetChampionshipUseCase <|-- GetChampionshipUseCase
+IGetTeamUseCase <|-- GetTeamUseCase
+
+' Data (UseCases Impl) -> Domain (Repositories)
+GetAllChampionshipsUseCase ..> IChampionshipRepository
+GetChampionshipUseCase ..> IChampionshipRepository
+GetTeamUseCase ..> ITeamRepository
+
+' Domain (Repositories) -> Data (Repositories Impl)
+IChampionshipRepository <|-- ChampionshipRepository
+ITeamRepository <|-- TeamRepository
+
+' Data (Repositories Impl) -> Data (Services)
+ChampionshipRepository ..> ApiService
+TeamRepository ..> ApiService
+
+' Relacionamentos de Entidades
+Championship "1" *-- "*" TableField
+Championship "1" *-- "*" Match
+TableField "*" -- "1" Team
+
+@enduml

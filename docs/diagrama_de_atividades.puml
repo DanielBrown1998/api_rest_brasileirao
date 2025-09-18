@@ -1,0 +1,44 @@
+@startuml
+title Diagrama de Atividades - Carregar Tabela de Classificação
+
+|UI Layer| 
+start
+:Usuário seleciona um campeonato;
+:Chama `cubit.getChampionship(id)`;
+
+|#palegreen|Cubit/Bloc Layer|
+:Recebe a chamada;
+:Emite o estado `Loading`;
+:Chama `getChampionshipUseCase(id)`;
+
+|#lightblue|Domain Layer|
+:Executa o caso de uso;
+:Chama `repository.getById(id)`;
+
+|#lightyellow|Data Layer|
+:Repositório recebe a chamada;
+:Chama `apiService.fetchChampionship(id)`;
+:API retorna os dados (JSON);
+:Repositório converte JSON para o modelo `Championship`;
+:Retorna o objeto `Championship` para o caso de uso;
+
+|#lightblue|Domain Layer|
+:Caso de uso retorna o `Championship` para o Cubit;
+
+|#palegreen|Cubit/Bloc Layer|
+if (Retorno com sucesso?) then (sim)
+  :Emite estado `Loaded` com os dados;
+else (não)
+  :Emite estado `Error` com a mensagem de erro;
+endif
+
+|UI Layer|
+:Recebe novo estado;
+if (Estado é `Loaded`?) then (sim)
+  :Renderiza a tabela de classificação;
+else (não)
+  :Exibe widget de erro;
+endif
+stop
+
+@enduml

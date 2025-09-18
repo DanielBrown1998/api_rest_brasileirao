@@ -1,0 +1,27 @@
+@startuml
+' Titulo
+title Diagrama de Casos de Uso - Brasileirão App
+
+' Ator
+left to right direction
+actor "Usuário" as user
+
+' Casos de Uso
+rectangle "Brasileirão App" {
+  usecase "Visualizar Campeonatos" as UC1
+  usecase "Ver Tabela de Classificação" as UC2
+  usecase "Ver Detalhes do Time" as UC3
+  usecase "Ver Próximas Partidas" as UC4
+}
+
+' Relacionamentos
+user -- UC1
+user -- UC2
+user -- UC3
+user -- UC4
+
+UC2 ..> UC1 : <<includes>>
+UC3 ..> UC1 : <<includes>>
+UC4 ..> UC1 : <<includes>>
+
+@enduml

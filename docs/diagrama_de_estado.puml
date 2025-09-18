@@ -1,0 +1,18 @@
+@startuml
+title Diagrama de Estado - ChampionshipCubit
+
+[*] --> Initial
+
+state Initial : Estado inicial, sem dados.
+state Loading : Carregando dados da API.
+state Loaded : Dados carregados com sucesso.
+state Error : Ocorreu um erro ao carregar.
+
+Initial --> Loading : on `getChampionships()`
+Loading --> Loaded : on `loadSuccess(data)`
+Loading --> Error : on `loadFailure(error)`
+
+Loaded --> Loading : on `getChampionships()`
+Error --> Loading : on `getChampionships()`
+
+@enduml

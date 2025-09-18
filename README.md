@@ -24,38 +24,45 @@ Este projeto é um aplicativo Flutter multiplataforma (Android, iOS, Web, Deskto
 
 O projeto é estruturado com base nos princípios da Arquitetura Limpa, dividindo o código em três camadas principais:
 
-```
-lib/
-├── data/
-│   ├── repository/      # Implementações concretas dos repositórios
-│   ├── services/        # Serviços de dados (API, banco de dados)
-│   └── usecases/        # Implementações concretas dos casos de uso
-│
-├── domain/
-│   ├── entities/        # Objetos de negócio da aplicação
-│   ├── repository/      # Contratos (classes abstratas) dos repositórios
-│   └── usecases/        # Contratos (classes abstratas) dos casos de uso
-│
-├── ui/
-│   ├── championship/    # Widgets e lógica de estado para campeonatos
-│   ├── team/            # Widgets e lógica de estado para times
-│   └── home/            # Página inicial e navegação principal
-│
-├── get_it_injection.dart  # Configuração da injeção de dependência
-└── main.dart              # Ponto de entrada da aplicação
-```
+- **`domain`**: A camada mais interna e o núcleo do aplicativo. Contém a lógica de negócios, entidades e os contratos (interfaces) para os casos de uso e repositórios.
+- **`data`**: A camada que implementa os contratos definidos no `domain`. É responsável por buscar dados de fontes externas (API, banco de dados local, etc.).
+- **`ui`**: A camada de apresentação. Contém todos os widgets do Flutter, as telas e a lógica de apresentação (usando `flutter_bloc`).
 
-- **`domain`**: A camada mais interna e o núcleo do aplicativo. Contém a lógica de negócios, entidades e os contratos (interfaces) para os casos de uso e repositórios. Não depende de nenhuma outra camada.
-- **`data`**: A camada que implementa os contratos definidos no `domain`. É responsável por buscar dados de fontes externas (API, banco de dados local, etc.) e transformar esses dados em entidades de domínio.
-- **`ui`**: A camada de apresentação. Contém todos os widgets do Flutter, as telas e a lógica de apresentação (usando `flutter_bloc`). Ela interage com a camada `domain` através dos casos de uso para exibir os dados e capturar a entrada do usuário.
+## 📐 Diagramas de Arquitetura
+
+Os diagramas abaixo foram gerados com PlantUML para documentar visualmente a arquitetura e os fluxos do projeto.
+
+### Diagrama de Casos de Uso
+
+Mostra as principais interações do usuário com o sistema.
+
+![Diagrama de Casos de Uso](docs/diagrama_casos_de_uso.png)
+
+### Diagrama de Atividades
+
+Detalha o fluxo para carregar a tabela de classificação de um campeonato.
+
+![Diagrama de Atividades](docs/diagrama_de_atividades.png)
+
+### Diagrama de Estado
+
+Modela os estados do `ChampionshipCubit` durante a busca de dados.
+
+![Diagrama de Estado](docs/diagrama_de_estado.png)
+
+### Diagrama de Classes
+
+Descreve a estrutura das classes nas camadas de UI, Domain e Data.
+
+![Diagrama de Classes](docs/diagrama_de_classes.png)
 
 ## dependencies-chave
 
 - **`flutter`**: Framework para construir a interface do usuário.
 - **`http`** & **`dio`**: Clientes HTTP para fazer chamadas à API REST.
-- **`flutter_bloc`**: Para gerenciamento de estado, separando a lógica de negócios da UI.
+- **`flutter_bloc`**: Para gerenciamento de estado.
 - **`get_it`**: Service Locator para injeção de dependências.
-- **`flutter_dotenv`**: Para carregar variáveis de ambiente de um arquivo `.env` de forma segura.
+- **`flutter_dotenv`**: Para carregar variáveis de ambiente de forma segura.
 
 ## 🚀 Como Começar
 
@@ -80,11 +87,11 @@ Siga as instruções abaixo para configurar e executar o projeto localmente.
     ```
 
 3.  **Configure a Chave da API (via .env)**
-    Este projeto utiliza a API da [api-futebol.com.br](https://www.api-futebol.com.br/) e gerencia as chaves de API usando um arquivo `.env` para maior segurança.
+    Este projeto gerencia as chaves de API usando um arquivo `.env`.
 
     a. Na raiz do projeto, crie um arquivo chamado `.env`.
 
-    b. Adicione sua chave de API a ele:
+    b. Adicione sua chave de API da [api-futebol.com.br](https://www.api-futebol.com.br/) a ele:
     ```
     API_KEY="live_sua_chave_de_api_aqui"
     ```
@@ -96,10 +103,9 @@ Siga as instruções abaixo para configurar e executar o projeto localmente.
         - .env
     ```
     
-    d. **IMPORTANTE:** Adicione `.env` ao seu arquivo `.gitignore` para garantir que suas chaves secretas não sejam enviadas ao seu repositório.
+    d. **IMPORTANTE:** Adicione `.env` ao seu arquivo `.gitignore`.
 
 4.  **Execute o aplicativo:**
-    O `main.dart` já está configurado para carregar as variáveis do `.env` na inicialização. Basta selecionar um dispositivo e executar:
     ```sh
     flutter run
     ```
