@@ -1,10 +1,10 @@
 import 'package:api_rest_brasileirao/domain/entities/match.dart';
 import 'package:api_rest_brasileirao/domain/entities/team.dart';
 import 'package:api_rest_brasileirao/domain/repository/team_repository_abstract.dart';
-import 'package:api_rest_brasileirao/data/services/api/api_teams.dart';
+import 'package:api_rest_brasileirao/domain/workflow/teams_workflow.dart';
 
 class TeamRepository extends TeamRepositoryAbstract {
-  final ApiTeams _apiTeams;
+  final TeamsWorkflow _apiTeams;
 
   TeamRepository(this._apiTeams);
 

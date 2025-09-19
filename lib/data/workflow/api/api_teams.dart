@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:api_rest_brasileirao/domain/entities/match.dart';
 import 'package:api_rest_brasileirao/domain/entities/team.dart';
-import 'package:api_rest_brasileirao/domain/repository/team_repository_abstract.dart';
+import 'package:api_rest_brasileirao/domain/workflow/teams_workflow.dart';
 import 'package:api_rest_brasileirao/utils/api_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-class ApiTeams implements TeamRepositoryAbstract {
+class ApiTeams implements TeamsWorkflow {
   final String url = ApiUtils.urlRoot;
-  final String token = ApiUtils.apiUtilsTokenHotmail;
+  final String token = ApiUtils.apiUtilsTokenHotmailv2;
 
   Future<http.Response> _get(String url) async {
     return await http.get(
@@ -28,7 +28,7 @@ class ApiTeams implements TeamRepositoryAbstract {
       List<dynamic> decoded = jsonDecode(response.body);
       decoded.map((element) {
         final team = Team.fromMap(element);
-        if (team.timeId == id) {
+        if (team.timeId == int.parse(id)) {
           return team;
         }
         return team;
@@ -62,7 +62,8 @@ class ApiTeams implements TeamRepositoryAbstract {
     debugPrint(response.body);
     if (response.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(response.body);
-      var decoded = map.values as List<dynamic>;
+      debugPrint(map.toString());
+      var decoded = map.values.first;
       debugPrint(decoded.toString());
       var result = decoded.map((element) {
         final team = Matchs.fromMap(element);

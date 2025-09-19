@@ -1,5 +1,6 @@
 import 'package:api_rest_brasileirao/ui/championship/page/championship_page.dart';
 import 'package:api_rest_brasileirao/ui/home/logic/home_cubic.dart';
+import 'package:api_rest_brasileirao/ui/widgets/custom_app_bar.dart';
 import 'package:api_rest_brasileirao/ui/widgets/shield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,20 +58,7 @@ class _HomePageState extends State<HomePage> {
     // }
 
     return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 20,
-        toolbarHeight: size.height * 0.13,
-        titleSpacing: 2,
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(40),
-            bottomRight: Radius.circular(40),
-          ),
-          side: BorderSide(color: theme.colorScheme.primary, width: 2),
-        ),
-        backgroundColor: theme.colorScheme.primary,
-        centerTitle: true,
-        elevation: 12,
+      appBar: CustomAppBar(
         title: Padding(
           padding: const EdgeInsets.all(24.0),
           child: SizedBox(

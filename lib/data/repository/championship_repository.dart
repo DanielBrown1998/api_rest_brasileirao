@@ -1,10 +1,10 @@
-import 'package:api_rest_brasileirao/data/services/api/api_championship.dart';
 import 'package:api_rest_brasileirao/domain/entities/championship.dart';
 import 'package:api_rest_brasileirao/domain/entities/table_field.dart';
 import 'package:api_rest_brasileirao/domain/repository/championship_repository_abstract.dart';
+import 'package:api_rest_brasileirao/domain/workflow/championship_workflow.dart';
 
 class ChampionshipRepository extends ChampionshipRepositoryAbstract {
-  final ApiChampionship _apiChampionship;
+  final ChampionshipWorkflow _apiChampionship;
 
   ChampionshipRepository(this._apiChampionship);
 

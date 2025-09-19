@@ -1,5 +1,6 @@
 import 'package:api_rest_brasileirao/domain/entities/team.dart';
 import 'package:api_rest_brasileirao/ui/team/logic/team_cubit.dart';
+import 'package:api_rest_brasileirao/ui/widgets/custom_app_bar.dart';
 import 'package:api_rest_brasileirao/ui/widgets/shield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,22 +11,9 @@ class TeamPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: size.height * 0.13,
-        titleSpacing: 2,
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(40),
-            bottomRight: Radius.circular(40),
-          ),
-          side: BorderSide(color: theme.colorScheme.primary, width: 2),
-        ),
-        backgroundColor: theme.colorScheme.primary,
-        centerTitle: true,
-        elevation: 12,
+      appBar: CustomAppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
