@@ -1,4 +1,3 @@
-import 'package:api_rest_brasileirao/domain/workflow/teams_workflow.dart';
+import 'package:api_rest_brasileirao/domain/source/teams_source.dart';
 
-abstract class TeamRepositoryAbstract implements TeamsWorkflow {
-}
+abstract class TeamRepositoryAbstract implements TeamsSource {}

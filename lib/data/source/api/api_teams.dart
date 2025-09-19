@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:api_rest_brasileirao/domain/entities/match.dart';
 import 'package:api_rest_brasileirao/domain/entities/team.dart';
-import 'package:api_rest_brasileirao/domain/workflow/teams_workflow.dart';
+import 'package:api_rest_brasileirao/domain/source/teams_source.dart';
 import 'package:api_rest_brasileirao/utils/api_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-class ApiTeams implements TeamsWorkflow {
+class ApiTeams implements TeamsSource {
   final String url = ApiUtils.urlRoot;
   final String token = ApiUtils.apiUtilsTokenHotmailv2;
 

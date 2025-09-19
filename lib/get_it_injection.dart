@@ -1,7 +1,7 @@
 import 'package:api_rest_brasileirao/data/repository/championship_repository.dart';
 import 'package:api_rest_brasileirao/data/repository/team_repository.dart';
-import 'package:api_rest_brasileirao/data/workflow/api/api_championship.dart';
-import 'package:api_rest_brasileirao/data/workflow/api/api_teams.dart';
+import 'package:api_rest_brasileirao/data/source/api/api_championship.dart';
+import 'package:api_rest_brasileirao/data/source/api/api_teams.dart';
 import 'package:api_rest_brasileirao/data/usecases/get_all_championships_use_case.dart';
 import 'package:api_rest_brasileirao/data/usecases/get_championship_use_case.dart';
 import 'package:api_rest_brasileirao/data/usecases/get_next_matches_use_case.dart';
@@ -14,8 +14,8 @@ import 'package:api_rest_brasileirao/domain/usecases/get_championship_use_case_a
 import 'package:api_rest_brasileirao/domain/usecases/get_next_matches_use_case_abstract.dart';
 import 'package:api_rest_brasileirao/domain/usecases/get_table_field_use_case_abstract.dart';
 import 'package:api_rest_brasileirao/domain/usecases/get_team_use_case_abstract.dart';
-import 'package:api_rest_brasileirao/domain/workflow/championship_workflow.dart';
-import 'package:api_rest_brasileirao/domain/workflow/teams_workflow.dart';
+import 'package:api_rest_brasileirao/domain/source/championship_source.dart';
+import 'package:api_rest_brasileirao/domain/source/teams_source.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -24,15 +24,15 @@ void setupGetIt() {
   ApiChampionship apiChampionship = ApiChampionship();
   ApiTeams apiTeams = ApiTeams();
 
-  getIt.registerLazySingleton<ChampionshipWorkflow>(() => apiChampionship);
-  getIt.registerLazySingleton<TeamsWorkflow>(() => apiTeams);
+  getIt.registerLazySingleton<ChampionshipSource>(() => apiChampionship);
+  getIt.registerLazySingleton<TeamsSource>(() => apiTeams);
 
   getIt.registerLazySingleton<TeamRepositoryAbstract>(
-    () => TeamRepository(getIt.get<TeamsWorkflow>()),
+    () => TeamRepository(getIt.get<TeamsSource>()),
   );
 
   getIt.registerLazySingleton<ChampionshipRepositoryAbstract>(
-    () => ChampionshipRepository(getIt.get<ChampionshipWorkflow>()),
+    () => ChampionshipRepository(getIt.get<ChampionshipSource>()),
   );
 
   getIt.registerFactory<GetTeamUseCaseAbstract>(() {

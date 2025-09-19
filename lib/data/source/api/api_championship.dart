@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:api_rest_brasileirao/domain/entities/championship.dart';
 import 'package:api_rest_brasileirao/domain/entities/table_field.dart';
-import 'package:api_rest_brasileirao/domain/workflow/championship_workflow.dart';
+import 'package:api_rest_brasileirao/domain/source/championship_source.dart';
 import 'package:api_rest_brasileirao/utils/api_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
-class ApiChampionship implements ChampionshipWorkflow{
+class ApiChampionship implements ChampionshipSource {
   final String url = ApiUtils.urlRoot;
   final String token = ApiUtils.apiUtilsTokenHotmail;
 

@@ -1,7 +1,7 @@
 import 'package:api_rest_brasileirao/domain/entities/match.dart';
 import 'package:api_rest_brasileirao/domain/entities/team.dart';
 
-abstract class TeamsWorkflow {
+abstract class TeamsSource {
   Future<List<Matchs>?> getTeamNextGames(String id) async {
     throw UnimplementedError();
   }
