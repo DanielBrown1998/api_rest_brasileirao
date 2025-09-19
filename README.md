@@ -18,7 +18,12 @@ Este projeto é um aplicativo Flutter multiplataforma (Android, iOS, Web, Deskto
 
 ## 📸 Screenshots
 
-*(Placeholder para screenshots do aplicativo)*
+<p align="center">
+  <img src="screenshots/flutter_01.png" width="200" />
+  <img src="screenshots/flutter_02.png" width="200" />
+  <img src="screenshots/flutter_03.png" width="200" />
+  <img src="screenshots/flutter_04.png" width="200" />
+</p>
 
 ## 📂 Arquitetura do Projeto
 
