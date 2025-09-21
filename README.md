@@ -1,4 +1,4 @@
-# Brasileirão Info App
+# Campeonatos de Futebol Info App
 
 Um aplicativo Flutter que exibe informações em tempo real sobre campeonatos de futebol, com foco no Brasileirão, utilizando a API da [api-futebol.com.br](https://www.api-futebol.com.br/).
 
@@ -23,6 +23,8 @@ Este projeto é um aplicativo Flutter multiplataforma (Android, iOS, Web, Deskto
   <img src="screenshots/flutter_02.png" width="200" />
   <img src="screenshots/flutter_03.png" width="200" />
   <img src="screenshots/flutter_04.png" width="200" />
+  <img src="screenshots/flutter_05.png" width="200" />
+  
 </p>
 
 ## 📂 Arquitetura do Projeto
