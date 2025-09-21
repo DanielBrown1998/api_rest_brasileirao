@@ -29,6 +29,10 @@ class ApiChampionship implements ChampionshipSource {
       List<dynamic> decoded = jsonDecode(response.body);
       var result = decoded.map((element) {
         final campeonato = Championship.fromMap(element);
+        String link = "v1/campeonatos/14";
+        if (campeonato.link.toString().contains(link)) {
+          debugPrint(campeonato.toJson());
+        }
         return campeonato;
       }).toList();
       return result;

@@ -92,7 +92,7 @@ class TeamPage extends StatelessWidget {
                                     '${match.timeMandante.nomePopular} x ${match.timeVisitante.nomePopular}',
                                   ),
                                   subtitle: Text(
-                                    '${match.dataRealizacao} - ${match.horaRealizacao}\n${match.estadio.nomePopular}',
+                                    '${match.dataRealizacao} - ${match.horaRealizacao}\n${(match.estadio != null) ? match.estadio!.nomePopular : 'estadio desconhecido'}',
                                   ),
                                   leading: ShieldWidget(
                                     urlShield: match.timeMandante.escudo,

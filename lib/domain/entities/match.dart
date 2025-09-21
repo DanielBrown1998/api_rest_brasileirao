@@ -16,7 +16,7 @@ class Matchs {
   final String dataRealizacao;
   final String horaRealizacao;
   final String dataRealizacaoIso;
-  final Stadium estadio;
+  final Stadium? estadio;
 
   Matchs({
     required this.partidaId,
@@ -32,7 +32,7 @@ class Matchs {
     required this.dataRealizacao,
     required this.horaRealizacao,
     required this.dataRealizacaoIso,
-    required this.estadio,
+    this.estadio,
   });
 
   factory Matchs.fromMap(Map<String, dynamic> map) {
@@ -50,7 +50,7 @@ class Matchs {
       dataRealizacao: map['data_realizacao'] ?? '',
       horaRealizacao: map['hora_realizacao'] ?? '',
       dataRealizacaoIso: map['data_realizacao_iso'] ?? '',
-      estadio: Stadium.fromMap(map['estadio']),
+      estadio: map['estadio'] != null ? Stadium.fromMap(map['estadio']) : null,
     );
   }
 

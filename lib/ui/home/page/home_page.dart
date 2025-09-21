@@ -25,38 +25,6 @@ class _HomePageState extends State<HomePage> {
     final theme = Theme.of(context);
     final size = MediaQuery.sizeOf(context);
 
-    // Map<String, dynamic> campeonato = {
-    //   "campeonato_id": 58,
-    //   "nome": "Campeonato Acreano",
-    //   "slug": "campeonato-acreano",
-    //   "nome_popular": "Acreano",
-    //   "edicao_atual": {
-    //     "edicao_id": 159,
-    //     "temporada": "2025",
-    //     "nome": "Campeonato Acreano 2025",
-    //     "nome_popular": "Acreano 2025",
-    //     "slug": "campeonato-acreano-2025",
-    //   },
-    //   "fase_atual": {
-    //     "fase_id": 702,
-    //     "nome": "Final",
-    //     "slug": "final-acreano-2025",
-    //     "tipo": "mata-mata",
-    //     "_link": "/v1/campeonatos/58/fases/702",
-    //   },
-    //   "rodada_atual": null,
-    //   "status": "finalizado",
-    //   "tipo": "Misto",
-    //   "logo":
-    //       "https:\/\/cdn.api-futebol.com.br\/campeonatos\/logos\/campeonato-acreano.png",
-    //   "regiao": "regional",
-    //   "_link": "/v1/campeonatos/58",
-    // };
-
-    // Future<List<Championship>> getCampeonato() async {
-    //   return [Championship.fromMap(campeonato)];
-    // }
-
     return Scaffold(
       appBar: CustomAppBar(
         title: Padding(

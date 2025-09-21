@@ -65,10 +65,12 @@ class ApiTeams implements TeamsSource {
       debugPrint(map.toString());
       var decoded = map.values.first;
       debugPrint(decoded.toString());
-      var result = decoded.map((element) {
+
+      List<Matchs> result = [];
+      for (var element in decoded) {
         final team = Matchs.fromMap(element);
-        return team;
-      }).toList();
+        result.add(team);
+      }
       return result;
     }
     return null;
